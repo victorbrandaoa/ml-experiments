@@ -1,0 +1,54 @@
+vectorizers:
+  - tf
+  # - tfidf
+  # - lda
+  # - w2v
+classifiers:
+  - naive_bayes
+tf:
+  min_df:
+    - 1
+    # - 1
+  max_df:
+    # - 30
+    - 35
+tfidf:
+  min_df:
+    - 1
+    - 1
+  max_df:
+    - 40
+    - 45
+lda:
+  base_vectorizer:
+    - tf
+    - tfidf
+  params:
+    n_components:
+      - 5
+      - 10
+    doc_topic_prior:
+      - 0.95
+      - 0.35
+    topic_word_prior:
+      - 0.80
+      - 0.75
+w2v:
+  sg:
+    - 0
+    - 1
+  vector_size:
+    - 100
+    - 200
+    - 300
+  window:
+    - 10
+    - 20
+    - 30
+  min_count:
+    - 5
+    - 10
+naive_bayes:
+  alpha:
+    - 0.1
+    - 0.2
