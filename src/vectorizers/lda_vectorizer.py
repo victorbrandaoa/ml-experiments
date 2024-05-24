@@ -7,10 +7,14 @@ def build_base_vectorizer(base_vectorizer, params):
 
 
 class LDAVectorizer():
-  def __init__(self, params):
-    self.vectorizer = build_base_vectorizer(params.get('base_vectorizer'), params.get(params.get('base_vectorizer')))
-    self.lda = LatentDirichletAllocation(**params.get('lda'))
+  def __init__(self, **kwargs):
+    self.vectorizer = build_base_vectorizer(kwargs.get('base_vectorizer'), kwargs.get(kwargs.get('base_vectorizer')))
+    self.lda = LatentDirichletAllocation(**kwargs.get('params'))
 
-  def fit_transform(self, docs):
+  def fit(self, docs):
     vectorized_docs = self.vectorizer.fit_transform(docs)
-    return self.lda.fit_transform(vectorized_docs)
+    self.lda.fit(vectorized_docs)
+  
+  def transform(self, docs):
+    vectorized_docs = self.vectorizer.transform(docs)
+    return self.lda.transform(vectorized_docs)

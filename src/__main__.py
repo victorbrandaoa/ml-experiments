@@ -11,7 +11,7 @@ def main():
   X_train, X_test, y_train, y_test = train_test_split(df['content'], df['pii_count'], test_size=0.2, random_state=42)
 
   for comb in gen_vectorizers_combinations(data):
-    vectorizer = vectorizers.get(comb.get('vectorizer'))(comb)
+    vectorizer = vectorizers.get(comb.get('vectorizer'))(**comb.get(comb.get('vectorizer')))
     vectorizer.fit(X_train)
     X_train_emb = vectorizer.transform(X_train)
     X_test_emb = vectorizer.transform(X_test)

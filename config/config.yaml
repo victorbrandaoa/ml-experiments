@@ -1,16 +1,16 @@
 vectorizers:
   - tf
-  # - tfidf
-  # - lda
-  # - w2v
+  - tfidf
+  - lda
+  - w2v
 classifiers:
   - naive_bayes
 tf:
   min_df:
     - 1
-    # - 1
+    - 1
   max_df:
-    # - 30
+    - 30
     - 35
 tfidf:
   min_df:

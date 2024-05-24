@@ -3,13 +3,14 @@ import numpy as np
 
 
 class Word2VecVectorizer():
-  def __init__(self, params):
-    self.params = params
+  def __init__(self, **kwrags):
+    self.params = kwrags
+    self.vectorizer = None
+    self.n_dimensions = 0
 
-  def transform(self, doc, vectorizer, n_dimensions):
+  def gen_embedding(self, doc, vectorizer, n_dimensions):
     num_tokens = 0
     doc_vec = np.zeros((n_dimensions,), dtype='float32')
-
 
     key_to_index = vectorizer.wv.key_to_index
     for token in doc:
@@ -19,11 +20,11 @@ class Word2VecVectorizer():
     
     return np.divide(doc_vec, num_tokens)
 
-
-  def fit_transform(self, docs):
-    vectorizer = Word2Vec(sentences=docs, **self.params.get(self.params.get('vectorizer')))
-    n_dimensions = len(vectorizer.wv.vectors[0])
-
+  def transform(self, docs):
     return [
-      self.transform(doc, vectorizer, n_dimensions) for doc in docs
+      self.gen_embedding(doc, self.vectorizer, self.n_dimensions) for doc in docs
     ]
+
+  def fit(self, docs):
+    self.vectorizer = Word2Vec(sentences=docs, **self.params.get(self.params.get('vectorizer')))
+    self.n_dimensions = len(self.vectorizer.wv.vectors[0])

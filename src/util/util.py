@@ -23,12 +23,18 @@ def format_lda_vectorizer_config(base_vectorizer, base_vectorizer_combs, lda_com
     }
   ))
 
-  return list(map(
-    lambda comb: { 
+  def format_comb(comb):
+    base_vectorizer = comb.get('base_vectorizer')
+    return {
       'vectorizer': 'lda',
-      **comb
-    }, combs)
-  )
+      'lda': {
+        'base_vectorizer': base_vectorizer,
+        base_vectorizer: comb.get(base_vectorizer),
+        'params': comb.get('lda')
+      }
+    }
+
+  return list(map(format_comb, combs))
 
 
 def gen_vectorizers_combinations(params):
